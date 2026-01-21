@@ -4,14 +4,14 @@
 <body>
 <h2>Connexion</h2>
 
-<form th:action="@{/login}" th:object="${client}" method="post">
-    Email: <input th:field="*{email}" type="email"/><br>
-    Mot de passe: <input th:field="*{password}" type="password"/><br>
+<form th:action="@{/gestion/login}" method="post">
+    Email: <input name="email" type="email" required/><br><br>
+    Mot de passe: <input name="password" type="password" required/><br><br>
     <button type="submit">Se connecter</button>
 </form>
 
 <p th:if="${error}" th:text="${error}" style="color:red"></p>
 
-<a th:href="@{/home}">Retour</a>
+<a th:href="@{/gestion/home}">Retour</a>
 </body>
 </html>

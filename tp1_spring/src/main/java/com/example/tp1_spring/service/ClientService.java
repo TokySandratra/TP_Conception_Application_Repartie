@@ -17,4 +17,13 @@ public class ClientService {
         var client = new Client(email, password, nom, prenom);
         clientRepository.save(client);
     }
+
+    public Client connexionClient(String email, String password){
+        Client client = clientRepository.findByEmail(email);
+        if(client != null  && client.getPassword().equals(password)){
+            return client;
+        }
+        return null;
+    }
+
 }

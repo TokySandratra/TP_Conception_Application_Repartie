@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Mes commandes</title>
+    </head>
+    <body>
+        <h2>Bienvenue <span th:text="${clientEmail}"></span> !</h2>
+
+        <div>
+            <a th:href="@{/gestion/nouvelle-commande}">Nouvelle commande</a>
+        </div>
+
+        <h3>Vos commandes :</h3>
+        <ul>
+            <li>Aucune commande pour le moment</li>
+        </ul>
+
+        <hr>
+        <a th:href="@{/gestion/logout}">Déconnexion</a>
+    </body>
+</html>
