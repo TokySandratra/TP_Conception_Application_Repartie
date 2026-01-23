@@ -59,19 +59,7 @@ public class ClientController {
 
     }
 
-    // ---- Afficher interface commande après connexion validée-----
-
-    @GetMapping("/commandes")
-    public ModelAndView commandes(HttpSession session){
-        String clientEmail = (String) session.getAttribute("clientEmail");
-        if (clientEmail == null ){
-            return new ModelAndView("login");
-        }
-        ModelAndView mv = new ModelAndView("commande");
-        mv.addObject("clientEmail", clientEmail);
-        return mv;
-    }
-
+    //----- LOG OUT ________
     @GetMapping("/logout")
     public RedirectView logout(HttpSession session) {
         session.invalidate();

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajout Commande</title>
+</head>
+<body>
+
+<h2>Ajouter une commande</h2>
+
+<form th:action="@{/gestion/nouvelle-commande}"
+      method="post">
+
+    <!-- Infos commande -->
+    <label>Nom de la commande :</label>
+    <input type="text"    name="nameCommande" required/><br><br>
+
+    <hr>
+
+    <h3>Lignes de commande</h3>
+
+    <!-- Ligne 0 -->
+    <div>
+        <label>Article :</label>
+        <input type="text" name="label" required/>
+
+        <label>Quantité :</label>
+        <input type="number" name="quantity" min="1" required/>
+
+        <label>Prix :</label>
+        <input type="number" name="price" step="0.01"  required/>
+    </div>
+
+    <br>
+
+    <br>
+
+    <button type="submit">Valider la commande</button>
+</form>
+
+<br>
+<a th:href="@{/gestion/commandes}">Retour</a>
+
+</body>
+</html>

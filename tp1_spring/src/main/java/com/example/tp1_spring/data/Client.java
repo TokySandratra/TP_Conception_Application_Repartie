@@ -3,6 +3,9 @@ package com.example.tp1_spring.data;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
+import java.util.List;
 
 @Entity
 public class Client {
@@ -13,6 +16,10 @@ public class Client {
     private String nom;
     private String prenom;
 
+    @OneToMany
+    private List<Commande> commandes;
+
+
     public Client(String email,String password, String nom, String prenom) {
         this.email = email;
         this.password = password;
@@ -22,6 +29,8 @@ public class Client {
 
     public Client() {
     }
+
+
 
     public String getEmail() {
         return email;
