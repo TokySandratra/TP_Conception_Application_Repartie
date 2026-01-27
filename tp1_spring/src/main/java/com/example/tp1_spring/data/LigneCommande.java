@@ -1,9 +1,6 @@
 package com.example.tp1_spring.data;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class LigneCommande {
@@ -11,15 +8,20 @@ public class LigneCommande {
     @Id
     @GeneratedValue
     private long id;
+    private String labelProduct;
     private int quantity;
-    private int idCommande;
-    private int idArticle;
+    private double priceUnit;
 
-    public LigneCommande(int quantity, int idCommande, int idArticle) {
+    @ManyToOne
+    private Commande commande;
+
+    public LigneCommande(String labelProduct, int quantity, double priceUnit) {
+        this.labelProduct = labelProduct;
         this.quantity = quantity;
-        this.idCommande = idCommande;
-        this.idArticle = idArticle;
+        this.priceUnit = priceUnit;
     }
+
+    public LigneCommande(){}
 
     public long getId() {
         return id;
@@ -27,6 +29,14 @@ public class LigneCommande {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getLabelProduct() {
+        return labelProduct;
+    }
+
+    public void setLabelProduct(String labelProduct) {
+        this.labelProduct = labelProduct;
     }
 
     public int getQuantity() {
@@ -37,19 +47,20 @@ public class LigneCommande {
         this.quantity = quantity;
     }
 
-    public int getIdCommande() {
-        return idCommande;
+    public double getPriceUnit() {
+        return priceUnit;
     }
 
-    public void setIdCommande(int idCommande) {
-        this.idCommande = idCommande;
+    public void setPriceUnit(double priceUnit) {
+        this.priceUnit = priceUnit;
     }
 
-    public int getIdArticle() {
-        return idArticle;
+    public Commande getCommande() {
+        return commande;
     }
 
-    public void setIdArticle(int idArticle) {
-        this.idArticle = idArticle;
+    public void setCommande(Commande commande) {
+        this.commande = commande;
     }
+    public double getTotalPrice(){return quantity*priceUnit;}
 }

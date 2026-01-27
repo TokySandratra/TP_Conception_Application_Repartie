@@ -1,3 +1,0 @@
-2026-01-20 00:41:36.006898+01:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "CLIENT" not found (this database is empty); SQL statement:
-select c1_0.email,c1_0.nom,c1_0.password,c1_0.prenom from client c1_0 where c1_0.email=? [42104-240]

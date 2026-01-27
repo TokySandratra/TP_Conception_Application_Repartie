@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head><title>Commande</title></head>
+    <body>
+        <h1>Commande <span th:text="${commande.name}"></span></h1>
+        <h3>Lignes de commande :</h3>
+        <table>
+            <tr>
+                <th>Produit</th><th>Qté</th><th>Prix unitaire</th><th>Total</th>
+            </tr>
+            <tr th:each="ligne : ${commande.ligneCommandes}">
+                <td th:text="${ligne.labelProduct}"></td>
+                <td th:text="${ligne.quantity}"></td>
+                <td th:text="${ligne.priceUnit} + ' €'"></td>
+                <td th:text="${ligne.quantity * ligne.priceUnit} + ' €'"></td>
+            </tr>
+        </table>
+
+
+        <a th:href="@{/gestion/commandes}">← Mes commandes</a>
+    </body>
+</html>

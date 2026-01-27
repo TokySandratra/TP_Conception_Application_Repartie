@@ -1,33 +1,44 @@
 package com.example.tp1_spring.service;
 
-import com.example.tp1_spring.data.Commande;
-import com.example.tp1_spring.data.LigneCommande;
-import com.example.tp1_spring.data.LigneCommandeRepository;
+import com.example.tp1_spring.data.*;
 import org.springframework.stereotype.Service;
-import com.example.tp1_spring.data.CommandeRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommandeService {
 
     private final CommandeRepository commandeRepository;
+    private final ClientRepository clientRepository;
     private final LigneCommandeRepository ligneCommandeRepository;
 
-    public CommandeService(CommandeRepository commandeRepository, LigneCommandeRepository ligneCommandeRepository) {
+    public CommandeService(CommandeRepository commandeRepository, ClientRepository clientRepository, LigneCommandeRepository ligneCommandeRepository) {
         this.commandeRepository = commandeRepository;
+        this.clientRepository = clientRepository;
         this.ligneCommandeRepository = ligneCommandeRepository;
     }
 
-    public List<Commande> getCommandeClient(String email){
-        return commandeRepository.findByClientEmail(email);
+    public Commande getById(Long id){return commandeRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("Commande introuvable"));}
+
+    public List<Commande> getCommandesClient(String clientEmail){
+        return commandeRepository.findByClientEmail(clientEmail);
     }
 
-//    public void enregistrerCommande(String name, String clientEmail, LigneCommande ligneCommande){
-//        ligneCommandeRepository.save(ligneCommande);
-//        Commande commande = new Commande(name,clientEmail,ligneCommande);
-//        commandeRepository.save(commande);
-//    }
+    public Commande enregistrerCommande(String name, String clientEmail){
+      Client client = clientRepository.findByEmail(clientEmail);
+      Commande commande = new Commande(name,clientEmail);
+      return commandeRepository.save(commande);
+    }
 
 
+    public Commande ajouterLigne(Long commandeId, String label, int quantiy, double priceUnit) {
+        Commande commande = commandeRepository.findById(commandeId).orElseThrow(()-> new IllegalArgumentException("Commande introuvable"));
+
+        LigneCommande ligneCommande = new LigneCommande(label,quantiy,priceUnit);
+        ligneCommande.setCommande(commande);
+        ligneCommandeRepository.save(ligneCommande);
+        commande.getLigneCommandes().add(ligneCommande);
+        return commandeRepository.save(commande);
+    }
 }

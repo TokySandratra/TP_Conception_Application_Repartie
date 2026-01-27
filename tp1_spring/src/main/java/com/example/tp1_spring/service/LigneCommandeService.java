@@ -14,7 +14,7 @@ public class LigneCommandeService {
         this.ligneCommandeRepository = ligneCommandeRepository;
     }
 
-    public void enregistrerLigneCommande(@RequestParam String label, @RequestParam int quantity, @RequestParam double price){
+    public void enregistrerLigneCommande( String label,  int quantity,  double price){
 
     }
 

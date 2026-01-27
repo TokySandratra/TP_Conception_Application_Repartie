@@ -55,7 +55,7 @@ public class ClientController {
             return mv;
         }
         session.setAttribute("clientEmail", client.getEmail());
-        return new ModelAndView("commande");
+        return new ModelAndView(new RedirectView("/gestion/commandes"));
 
     }
 

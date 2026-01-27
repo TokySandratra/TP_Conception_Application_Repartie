@@ -5,18 +5,25 @@
         <title>Mes commandes</title>
     </head>
     <body>
-        <h2>Bienvenue <span th:text="${clientEmail}"></span> !</h2>
-
-        <div>
-            <a th:href="@{/gestion/nouvelle-commande}">Nouvelle commande</a>
+        <h1>Gestion des commandes</h1>
+        <div th:if="${clientEmail}">
+            <p>
+                Bonjour <span th:text="${clientEmail}"></span> |
+                <a th:href="@{/gestion/logout}">Déconnexion</a>
+            </p>
         </div>
 
-        <h3>Vos commandes :</h3>
-        <ul>
-            <li>Aucune commande pour le moment</li>
-        </ul>
+        <h2>Vos commandes :</h2>
+        <div th:each="cmd : ${commandes}">
+            <a th:href="@{/gestion/commandes/{id}(id=${cmd.id})}">
+                Commande #<span th:text="${cmd.id}"></span> - <span th:text="${cmd.name}"></span>
+            </a>
+        </div>
+        <h3>Créer votre commande : </h3>
 
-        <hr>
-        <a th:href="@{/gestion/logout}">Déconnexion</a>
+        <form th:action="@{/gestion/commandes/creer}" method="post" style="display:inline;">
+            Nom de la commande : <input name="name" required>
+            <button type="submit"> Créer nouvelle commande</button>
+        </form>
     </body>
 </html>
