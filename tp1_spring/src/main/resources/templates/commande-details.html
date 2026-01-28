@@ -13,9 +13,21 @@
                 <td th:text="${ligne.quantity}"></td>
                 <td th:text="${ligne.priceUnit} + ' €'"></td>
                 <td th:text="${ligne.quantity * ligne.priceUnit} + ' €'"></td>
+                <td>
+                    <form th:action="@{/gestion/commandes/{commandeId}/supprimer-ligne/{ligneId}(commandeId=${commande.id}, ligneId=${ligne.id})}" method="post">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                </td>
             </tr>
         </table>
+        <h3>Ajouter une ligne de commande :</h3>
+        <form th:action="@{/gestion/commandes/{id}/ajouter-ligne(id=${commande.id})}" method="post">
+            Produit : <input name="labelProduct" required>
+            Quantité : <input name = "quantity" type="number" required>
+            Prix : <input name="priceUnit" type="number" required>
+            <button type="submit">Ajouter</button>
 
+        </form>
 
         <a th:href="@{/gestion/commandes}">← Mes commandes</a>
     </body>

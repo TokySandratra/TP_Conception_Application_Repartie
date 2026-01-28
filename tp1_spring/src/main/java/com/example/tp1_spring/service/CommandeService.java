@@ -32,13 +32,19 @@ public class CommandeService {
     }
 
 
-    public Commande ajouterLigne(Long commandeId, String label, int quantiy, double priceUnit) {
+    public Commande ajouterLigne(Long commandeId, String label, int quantity, double priceUnit) {
         Commande commande = commandeRepository.findById(commandeId).orElseThrow(()-> new IllegalArgumentException("Commande introuvable"));
 
-        LigneCommande ligneCommande = new LigneCommande(label,quantiy,priceUnit);
+        LigneCommande ligneCommande = new LigneCommande(label,quantity,priceUnit);
         ligneCommande.setCommande(commande);
         ligneCommandeRepository.save(ligneCommande);
         commande.getLigneCommandes().add(ligneCommande);
         return commandeRepository.save(commande);
+    }
+
+    public void supprimmerLigne(Long ligneId){
+        LigneCommande ligne = ligneCommandeRepository.findById(ligneId).orElseThrow(() -> new IllegalArgumentException("Ligne introuvable"));
+
+        ligneCommandeRepository.delete(ligne);
     }
 }

@@ -66,4 +66,16 @@ public class CommandeController {
         mv.addObject("clientEmail", clientEmail);
         return mv;
     }
+
+    @PostMapping("/commandes/{id}/ajouter-ligne")
+    public ModelAndView addLinecommand(@PathVariable("id") Long commandeId,@RequestParam String labelProduct, @RequestParam int quantity, @RequestParam double priceUnit){
+        commandeService.ajouterLigne(commandeId,labelProduct,quantity,priceUnit);
+        return new ModelAndView(new RedirectView("/gestion/commandes/"+commandeId));
+    }
+
+    @PostMapping("/commandes/{commandeId}/supprimer-ligne/{ligneId}")
+    public ModelAndView supprimerLigne(@PathVariable("commandeId")Long commandeId, @PathVariable("ligneId") Long ligneId){
+        commandeService.supprimmerLigne(ligneId);
+        return new ModelAndView(new RedirectView("/gestion/commandes/"+commandeId));
+    }
 }
