@@ -47,4 +47,9 @@ public class CommandeService {
 
         ligneCommandeRepository.delete(ligne);
     }
+
+    public double getTotalCommande(Long commandeId){
+        Commande commande = getById(commandeId);
+        return commande.getLigneCommandes().stream().mapToDouble(LigneCommande::getTotalPrice).sum();
+    }
 }

@@ -4,7 +4,7 @@
     <body>
         <h1>Commande <span th:text="${commande.name}"></span></h1>
         <h3>Lignes de commande :</h3>
-        <table>
+        <table border="1">
             <tr>
                 <th>Produit</th><th>Qté</th><th>Prix unitaire</th><th>Total</th>
             </tr>
@@ -19,12 +19,25 @@
                     </form>
                 </td>
             </tr>
+            <tr th:if="${commande.ligneCommandes.empty}">
+                <td colspan="5" style="text-align:center;color:#777;">
+                    Aucune ligne encore.
+                </td>
+            </tr>
         </table>
+
+        <div style="margin-top: 20px; padding: 20px; border-top: 2px solid #ccc;">
+            <a th:href="@{/gestion/commandes/{id}/imprimer(id=${commande.id})}"
+                style="background:#007bff;color:white;padding:10px 20px;text-decoration:none;">
+                Imprimer cette commande
+            </a>
+        </div>
+
         <h3>Ajouter une ligne de commande :</h3>
         <form th:action="@{/gestion/commandes/{id}/ajouter-ligne(id=${commande.id})}" method="post">
             Produit : <input name="labelProduct" required>
             Quantité : <input name = "quantity" type="number" required>
-            Prix : <input name="priceUnit" type="number" required>
+            Prix Unitaire (€)  : <input name="priceUnit" type="number" required>
             <button type="submit">Ajouter</button>
 
         </form>

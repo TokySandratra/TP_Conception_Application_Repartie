@@ -78,4 +78,24 @@ public class CommandeController {
         commandeService.supprimmerLigne(ligneId);
         return new ModelAndView(new RedirectView("/gestion/commandes/"+commandeId));
     }
+
+    @GetMapping("/commandes/{id}/imprimer")
+    public ModelAndView imprimerCommande(@PathVariable Long id, HttpSession session) {
+        String clientEmail = (String) session.getAttribute("clientEmail");
+        if (clientEmail == null) {
+            return new ModelAndView(new RedirectView("/gestion/login", true));
+        }
+
+        Commande commande = commandeService.getById(id);
+        if (commande == null || !commande.getClientEmail().equals(clientEmail)) {
+            return new ModelAndView(new RedirectView("/gestion/commandes", true));
+        }
+
+        ModelAndView mv = new ModelAndView("commande-impression");
+        mv.addObject("commande", commande);
+        mv.addObject(("totalCommande"), commandeService.getTotalCommande(id));
+        mv.addObject("clientEmail", clientEmail);
+        return mv;
+    }
+
 }
