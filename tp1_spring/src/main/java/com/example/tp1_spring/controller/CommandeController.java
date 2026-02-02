@@ -15,12 +15,12 @@ import java.util.List;
 @RequestMapping("/gestion")
 public class CommandeController {
     private final CommandeService commandeService;
-    private final LigneCommandeService ligneCommandeService;
 
 
-    public CommandeController(CommandeService commandeService, LigneCommandeService ligneCommandeService) {
+
+    public CommandeController(CommandeService commandeService) {
         this.commandeService = commandeService;
-        this.ligneCommandeService = ligneCommandeService;
+
     }
 
 
@@ -68,7 +68,11 @@ public class CommandeController {
     }
 
     @PostMapping("/commandes/{id}/ajouter-ligne")
-    public ModelAndView addLinecommand(@PathVariable("id") Long commandeId,@RequestParam String labelProduct, @RequestParam int quantity, @RequestParam double priceUnit){
+    public ModelAndView addLinecommand(@PathVariable("id") Long commandeId,@RequestParam String labelProduct, @RequestParam int quantity, @RequestParam double priceUnit, HttpSession session){
+        String email =(String) session.getAttribute("clientEmail");
+        if(email == null){
+            return new ModelAndView(new RedirectView("/gestion/home"));
+        }
         commandeService.ajouterLigne(commandeId,labelProduct,quantity,priceUnit);
         return new ModelAndView(new RedirectView("/gestion/commandes/"+commandeId));
     }
